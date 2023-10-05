@@ -32,6 +32,7 @@ namespace BaseProject.Data.EF
             modelBuilder.ApplyConfiguration(new ReplyConfiguration());
             modelBuilder.ApplyConfiguration(new RatingConfiguration());
             modelBuilder.ApplyConfiguration(new FollowingConfiguration());
+            modelBuilder.ApplyConfiguration(new AuthorConfiguration());
 
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
@@ -56,6 +57,8 @@ namespace BaseProject.Data.EF
         public DbSet<Reply> Replies { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+
+        public DbSet<Author> Authors { get; set; }
 
         public DbSet<AppConfig> AppConfigs { get; set; }    
     }

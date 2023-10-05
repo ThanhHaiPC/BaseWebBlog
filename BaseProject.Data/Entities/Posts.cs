@@ -13,7 +13,7 @@ namespace BaseProject.Data.Entities
     {
         public int PostID { get; set; }
         public int ImageID { get; set; }
-
+        public int AuthorID { get; set; }
         public Guid UserId { get; set; }
         public string  Title {  get; set; }
         public string  Content { get; set; }
@@ -30,11 +30,14 @@ namespace BaseProject.Data.Entities
 
         // relationship
         public User User { get; set; }
+        public Author Author { get; set; }
         public List<CategoriesDetail> CategoriesDetail { get; set; }
         public List<Comment> Comment { get; set; }
         public List<Images> Images { get; set; }
         public List<Like> Likes { get; set; }
         public List<Video> Video { get; set; }
         public List<Tag> Tag { get; set; }
+
+       
     }
 }
