@@ -19,7 +19,8 @@ namespace BaseProject.Data.Configurations
 
 
             // RelationShip 1 -n
-            builder.HasOne(x => x.Follower).WithMany(x => x.Followee).HasForeignKey(x => x.FollowerId);          
+            builder.HasOne(x => x.Follower).WithMany(x => x.Followee).HasForeignKey(x => x.FollowerId);
+
         }
     }
 }

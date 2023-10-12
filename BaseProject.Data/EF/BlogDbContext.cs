@@ -1,7 +1,8 @@
 ﻿using BaseProject.Data.Configurations;
 using BaseProject.Data.Entities;
-using Microsoft.AspNetCore.Identity;
+/*using Microsoft.AspNet.Identity.EntityFramework;*/
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BaseProject.Data.EF
 {
-    public class BlogDbContext : DbContext
+    public class BlogDbContext : DbContext 
     {
         public BlogDbContext(DbContextOptions options) : base(options)
         {
