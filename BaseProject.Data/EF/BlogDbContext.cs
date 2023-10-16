@@ -19,6 +19,7 @@ namespace BaseProject.Data.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configure using Fluent API
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
@@ -43,6 +44,8 @@ namespace BaseProject.Data.EF
             modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
 
             base.OnModelCreating(modelBuilder);
+
+            new SeedData(modelBuilder).Seed();
         }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoriesDetail> CategoriesDetail { get; set; }
