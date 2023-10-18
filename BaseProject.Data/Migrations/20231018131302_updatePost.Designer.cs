@@ -4,6 +4,7 @@ using BaseProject.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaseProject.Data.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    partial class BlogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231018131302_updatePost")]
+    partial class updatePost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,21 +69,12 @@ namespace BaseProject.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("AuthorID");
 
                     b.ToTable("Author", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            AuthorID = 1,
-                            Name = "Trung Tin"
-                        },
-                        new
-                        {
-                            AuthorID = 2,
-                            Name = "Thanh Hai"
-                        });
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.CategoriesDetail", b =>
@@ -436,22 +430,6 @@ namespace BaseProject.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("9d451187-7eb4-49fe-b7bd-49e7e9e6bec9"),
-                            Description = "admin",
-                            Name = "admin",
-                            NormalizedName = "admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("d66b2c46-2c04-449f-ba99-62e2fa8126d3"),
-                            Description = "User Role",
-                            Name = "user",
-                            NormalizedName = "user"
-                        });
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.Tag", b =>
@@ -551,21 +529,6 @@ namespace BaseProject.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("fe743bed-2fdc-4b1b-b5eb-d681aeb09aeb"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "b7f53372-1077-4578-b330-ede80f34adae",
-                            Email = "luunguyentrungtin@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "AQAAAAIAAYagAAAAEDQkSfXkMnD/dS3nWDfmJe3SO/uuG7MGtqKgXx96FGwEEZSUTXHOEYD2HmM1UdrUrw==",
-                            PhoneNumberConfirmed = false,
-                            TwoFactorEnabled = false,
-                            UserName = "admin"
-                        });
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.Video", b =>
@@ -686,13 +649,6 @@ namespace BaseProject.Data.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.ToTable("AppUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("fe743bed-2fdc-4b1b-b5eb-d681aeb09aeb"),
-                            RoleId = new Guid("9d451187-7eb4-49fe-b7bd-49e7e9e6bec9")
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>

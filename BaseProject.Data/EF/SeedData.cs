@@ -1,4 +1,5 @@
 ﻿using BaseProject.Data.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -96,7 +97,54 @@ namespace BaseProject.Data.EF
                 {
                     CategoriesID = 14,
                     Name = "NHÀ ĐẤT",
-                });    
+                });
+            //Author
+            modelBuilder.Entity<Author>().HasData(
+                new Author()
+                {
+                    AuthorID = 1,
+                    Name = "Trung Tin",
+                },
+                new Author()
+                {
+                    AuthorID = 2,
+                    Name = "Thanh Hai",
+                });
+
+            var roleId = new Guid("9D451187-7EB4-49FE-B7BD-49E7E9E6BEC9");
+            var adminId = new Guid("FE743BED-2FDC-4B1B-B5EB-D681AEB09AEB");
+            var roleId1 = new Guid("D66B2C46-2C04-449F-BA99-62E2FA8126D3");
+
+            modelBuilder.Entity<Role>().HasData(
+                new Role()
+                {
+                    Id = roleId,
+                    Name = "admin",
+                    NormalizedName = "admin",
+                    Description = "admin",
+                },
+                new Role
+                {
+                    Id = roleId1,
+                    Name = "user",
+                    NormalizedName = "user",
+                    Description = "User Role"
+                });
+            var hasher = new PasswordHasher<User>();
+            modelBuilder.Entity<User>().HasData(
+
+                new User()
+                {
+                    Id = adminId,
+                    UserName = "admin",
+                    PasswordHash = hasher.HashPassword(null, "123@Tin"),
+                    Email = "luunguyentrungtin@gmail.com",                   
+                });
+            modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>
+            {
+                RoleId = roleId,
+                UserId = adminId
+            });
         }
     }
 }

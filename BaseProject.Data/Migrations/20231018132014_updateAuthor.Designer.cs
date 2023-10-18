@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaseProject.Data.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20231012085355_Update-database")]
-    partial class Updatedatabase
+    [Migration("20231018132014_updateAuthor")]
+    partial class updateAuthor
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,6 +37,23 @@ namespace BaseProject.Data.Migrations
                     b.HasKey("Key");
 
                     b.ToTable("AppConfigs", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Key = "HomeTitle",
+                            Value = "Đây là trang chủ của Web_Blog"
+                        },
+                        new
+                        {
+                            Key = "HomeKeyWord",
+                            Value = "Đây là từ khóa của Web_Blog"
+                        },
+                        new
+                        {
+                            Key = "HomeDescription",
+                            Value = "Đây là mô tả của Web_Blog"
+                        });
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.Author", b =>
@@ -52,12 +69,21 @@ namespace BaseProject.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<DateTime>("UpdateDate")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("AuthorID");
 
                     b.ToTable("Author", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorID = 1,
+                            Name = "Trung Tin"
+                        },
+                        new
+                        {
+                            AuthorID = 2,
+                            Name = "Thanh Hai"
+                        });
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.CategoriesDetail", b =>
@@ -98,6 +124,78 @@ namespace BaseProject.Data.Migrations
                     b.HasKey("CategoriesID");
 
                     b.ToTable("Categories", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            CategoriesID = 1,
+                            Name = "BÓNG ĐÁ"
+                        },
+                        new
+                        {
+                            CategoriesID = 2,
+                            Name = "THẾ GIỚI"
+                        },
+                        new
+                        {
+                            CategoriesID = 3,
+                            Name = "XÃ HỘI"
+                        },
+                        new
+                        {
+                            CategoriesID = 4,
+                            Name = "VĂN HÓA"
+                        },
+                        new
+                        {
+                            CategoriesID = 5,
+                            Name = "KINH TẾ"
+                        },
+                        new
+                        {
+                            CategoriesID = 6,
+                            Name = "GIÁO DỤC"
+                        },
+                        new
+                        {
+                            CategoriesID = 7,
+                            Name = "THỂ THAO"
+                        },
+                        new
+                        {
+                            CategoriesID = 8,
+                            Name = "GIẢI TRÍ"
+                        },
+                        new
+                        {
+                            CategoriesID = 9,
+                            Name = "PHÁP LUẬT"
+                        },
+                        new
+                        {
+                            CategoriesID = 10,
+                            Name = "CÔNG NGHỆ"
+                        },
+                        new
+                        {
+                            CategoriesID = 11,
+                            Name = "KHOA HỌC"
+                        },
+                        new
+                        {
+                            CategoriesID = 12,
+                            Name = "ĐỜI SỐNG "
+                        },
+                        new
+                        {
+                            CategoriesID = 13,
+                            Name = "XE CỘ"
+                        },
+                        new
+                        {
+                            CategoriesID = 14,
+                            Name = "NHÀ ĐẤT"
+                        });
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.Comment", b =>
@@ -245,9 +343,6 @@ namespace BaseProject.Data.Migrations
                     b.Property<DateTime>("UploadDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("View")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -256,8 +351,6 @@ namespace BaseProject.Data.Migrations
                     b.HasKey("PostID");
 
                     b.HasIndex("AuthorID");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Posts", (string)null);
                 });
@@ -684,15 +777,7 @@ namespace BaseProject.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BaseProject.Data.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Author");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.Rating", b =>

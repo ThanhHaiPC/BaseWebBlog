@@ -10,7 +10,7 @@ namespace BaseProject.Data.Entities
     {
         public int AuthorID { get; set; }
         public string Name { get; set; }
-        public DateTime UpdateDate { get; set; }
+        
 
         //Relationship
 

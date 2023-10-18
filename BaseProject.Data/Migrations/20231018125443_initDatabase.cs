@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace BaseProject.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Updatedatabase : Migration
+    public partial class initDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -216,13 +218,13 @@ namespace BaseProject.Data.Migrations
                         column: x => x.AuthorID,
                         principalTable: "Author",
                         principalColumn: "AuthorID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Posts_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -242,13 +244,13 @@ namespace BaseProject.Data.Migrations
                         column: x => x.CategoriesID,
                         principalTable: "Categories",
                         principalColumn: "CategoriesID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_CategoriesDetails_Posts_PostID",
                         column: x => x.PostID,
                         principalTable: "Posts",
                         principalColumn: "PostID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -299,7 +301,7 @@ namespace BaseProject.Data.Migrations
                         column: x => x.PostID,
                         principalTable: "Posts",
                         principalColumn: "PostID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -374,7 +376,7 @@ namespace BaseProject.Data.Migrations
                         column: x => x.PostID,
                         principalTable: "Posts",
                         principalColumn: "PostID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -427,13 +429,44 @@ namespace BaseProject.Data.Migrations
                         column: x => x.CommentID,
                         principalTable: "Comments",
                         principalColumn: "CommentID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Replys_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AppConfigs",
+                columns: new[] { "Key", "Value" },
+                values: new object[,]
+                {
+                    { "HomeDescription", "Đây là mô tả của Web_Blog" },
+                    { "HomeKeyWord", "Đây là từ khóa của Web_Blog" },
+                    { "HomeTitle", "Đây là trang chủ của Web_Blog" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "CategoriesID", "Name" },
+                values: new object[,]
+                {
+                    { 1, "BÓNG ĐÁ" },
+                    { 2, "THẾ GIỚI" },
+                    { 3, "XÃ HỘI" },
+                    { 4, "VĂN HÓA" },
+                    { 5, "KINH TẾ" },
+                    { 6, "GIÁO DỤC" },
+                    { 7, "THỂ THAO" },
+                    { 8, "GIẢI TRÍ" },
+                    { 9, "PHÁP LUẬT" },
+                    { 10, "CÔNG NGHỆ" },
+                    { 11, "KHOA HỌC" },
+                    { 12, "ĐỜI SỐNG " },
+                    { 13, "XE CỘ" },
+                    { 14, "NHÀ ĐẤT" }
                 });
 
             migrationBuilder.CreateIndex(
