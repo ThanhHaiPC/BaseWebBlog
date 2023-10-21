@@ -1,4 +1,5 @@
-﻿using BaseProject.ViewModels.Catalog.Categories;
+﻿using BaseProject.Data.Entities;
+using BaseProject.ViewModel.Catalog.Categories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,9 @@ namespace BaseProject.Application.Catalog.Category
 {
     public interface ICategoryService
     {
-        Task<List<CategoryVm>> GetAll(string languageId);
+        Task<int> Create(CategoryRequest request);
+        Task<int> Update(int categoriesId,CategoryRequest request);
+        Task<int> Delete(int id);
+        Task<List<Categories>> GetAll();
     }
 }
