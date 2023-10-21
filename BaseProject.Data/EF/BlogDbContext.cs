@@ -1,6 +1,5 @@
 ﻿using BaseProject.Data.Configurations;
 using BaseProject.Data.Entities;
-/*using Microsoft.AspNet.Identity.EntityFramework;*/
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -8,13 +7,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BaseProject.Data.EF
 {
-    public class BlogDbContext : DbContext 
+    public class BlogDbContext : IdentityDbContext<User, Role, Guid>
     {
         public BlogDbContext(DbContextOptions options) : base(options)
         {
+           
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlServer(@"Server=THANHHAI;Database=eBlogSolution;Encrypt = False;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaseProject.Data.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20231016084706_Add_DataCategories")]
-    partial class Add_DataCategories
+    [Migration("20231016095301_Database")]
+    partial class Database
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -418,6 +418,7 @@ namespace BaseProject.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
@@ -427,14 +428,37 @@ namespace BaseProject.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role", (string)null);
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b470c0c0-5890-4394-a7a5-dbfb572dcbdf"),
+                            Description = "Administrator Role",
+                            Name = "admin",
+                            NormalizedName = "admin"
+                        },
+                        new
+                        {
+                            Id = new Guid("3ee42ff4-8b22-44b0-848f-a6a422405aa9"),
+                            Description = "User Role",
+                            Name = "user",
+                            NormalizedName = "user"
+                        });
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.Tag", b =>
@@ -473,6 +497,7 @@ namespace BaseProject.Data.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DateOfBir")
@@ -483,7 +508,8 @@ namespace BaseProject.Data.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
@@ -506,10 +532,12 @@ namespace BaseProject.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -528,12 +556,42 @@ namespace BaseProject.Data.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("062d4aa7-32c4-4e97-8ca7-ca3b4d97280c"),
+                            AccessFailedCount = 0,
+                            Address = "Biên Hòa Đồng Nai",
+                            ConcurrencyStamp = "f846d515-effe-4914-961a-0c65f2661424",
+                            DateOfBir = new DateTime(2002, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "abcd@gmail.com",
+                            EmailConfirmed = true,
+                            Image = "",
+                            LockoutEnabled = false,
+                            Name = "Phạm Thanh Hải",
+                            NormalizedEmail = "abcd@gmail.com",
+                            NormalizedUserName = "admin",
+                            PasswordHash = "AQAAAAIAAYagAAAAEA3x2Iby0t8w5v8xhGo7Dfu8OebT7HnDagYr1bFgS6f6puGJpEOn4yReKw001ja1jQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.Video", b =>
@@ -596,7 +654,9 @@ namespace BaseProject.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppRoleClaims", (string)null);
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
@@ -618,29 +678,30 @@ namespace BaseProject.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppUserClaims", (string)null);
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("LoginProvider")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProviderKey")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UserId");
+                    b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.ToTable("AppUserLogins", (string)null);
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
@@ -653,29 +714,35 @@ namespace BaseProject.Data.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.ToTable("AppUserRoles", (string)null);
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = new Guid("062d4aa7-32c4-4e97-8ca7-ca3b4d97280c"),
+                            RoleId = new Guid("b470c0c0-5890-4394-a7a5-dbfb572dcbdf")
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("LoginProvider")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AppUserTokens", (string)null);
+                    b.ToTable("AspNetUserTokens", (string)null);
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.CategoriesDetail", b =>
@@ -850,6 +917,57 @@ namespace BaseProject.Data.Migrations
                     b.Navigation("Post");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+                {
+                    b.HasOne("BaseProject.Data.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
+                {
+                    b.HasOne("BaseProject.Data.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
+                {
+                    b.HasOne("BaseProject.Data.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
+                {
+                    b.HasOne("BaseProject.Data.Entities.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BaseProject.Data.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
+                {
+                    b.HasOne("BaseProject.Data.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.Author", b =>
