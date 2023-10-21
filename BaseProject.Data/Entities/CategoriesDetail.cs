@@ -15,6 +15,6 @@ namespace BaseProject.Data.Entities
 
         // RelationShip
         public Posts Post { get; set; }
-        public Category Category { get; set; }
+        public Categories Category { get; set; }
     }
 }

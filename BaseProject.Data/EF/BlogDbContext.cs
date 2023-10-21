@@ -55,7 +55,7 @@ namespace BaseProject.Data.EF
 
             new SeedData(modelBuilder).Seed();
         }
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Categories> Categories { get; set; }
         public DbSet<CategoriesDetail> CategoriesDetail { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Follow> Follows { get; set; }

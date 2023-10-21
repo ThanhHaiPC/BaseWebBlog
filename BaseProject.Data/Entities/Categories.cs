@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BaseProject.Data.Entities
 {
-    public class Category
+    public class Categories
     {
         public int CategoriesID { get; set; }
         public string Name { get; set; }

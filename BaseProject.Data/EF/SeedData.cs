@@ -27,73 +27,73 @@ namespace BaseProject.Data.EF
                new AppConfig() { Key = "HomeDescription", Value = "Đây là mô tả của Web_Blog" }
                );
             //      Category
-            modelBuilder.Entity<Category>().HasData(
-                new Category()
+            modelBuilder.Entity<Categories>().HasData(
+                new Categories()
                 {
                     CategoriesID = 1,
                     Name = "BÓNG ĐÁ",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 2,
                     Name = "THẾ GIỚI",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 3,
                     Name = "XÃ HỘI",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 4,
                     Name = "VĂN HÓA",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 5,
                     Name = "KINH TẾ",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 6,
                     Name = "GIÁO DỤC",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 7,
                     Name = "THỂ THAO",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 8,
                     Name = "GIẢI TRÍ",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 9,
                     Name = "PHÁP LUẬT",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 10,
                     Name = "CÔNG NGHỆ",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 11,
                     Name = "KHOA HỌC",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 12,
                     Name = "ĐỜI SỐNG ",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 13,
                     Name = "XE CỘ",
                 },
-                new Category()
+                new Categories()
                 {
                     CategoriesID = 14,
                     Name = "NHÀ ĐẤT",
