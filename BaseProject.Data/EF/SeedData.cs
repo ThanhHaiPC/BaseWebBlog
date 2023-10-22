@@ -98,6 +98,8 @@ namespace BaseProject.Data.EF
                     CategoriesID = 14,
                     Name = "NHÀ ĐẤT",
                 });
+
+            
             //      ADMINISTRATOR
             var roleId = new Guid("B470C0C0-5890-4394-A7A5-DBFB572DCBDF");
             var roleId1 = new Guid("3EE42FF4-8B22-44B0-848F-A6A422405AA9");

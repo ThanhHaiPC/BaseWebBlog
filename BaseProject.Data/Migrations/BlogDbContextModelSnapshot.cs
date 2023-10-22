@@ -72,31 +72,23 @@ namespace BaseProject.Data.Migrations
                     b.HasKey("AuthorID");
 
                     b.ToTable("Author", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorID = 1,
+                            Name = "Trung Tin",
+                            UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            AuthorID = 2,
+                            Name = "Thanh Hai",
+                            UpdateDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
-            modelBuilder.Entity("BaseProject.Data.Entities.CategoriesDetail", b =>
-                {
-                    b.Property<int>("CategoriesID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PostID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoriesDetailID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.HasKey("CategoriesID", "PostID");
-
-                    b.HasIndex("PostID");
-
-                    b.ToTable("CategoriesDetails", (string)null);
-                });
-
-            modelBuilder.Entity("BaseProject.Data.Entities.Category", b =>
+            modelBuilder.Entity("BaseProject.Data.Entities.Categories", b =>
                 {
                     b.Property<int>("CategoriesID")
                         .ValueGeneratedOnAdd()
@@ -184,6 +176,28 @@ namespace BaseProject.Data.Migrations
                             CategoriesID = 14,
                             Name = "NHÀ ĐẤT"
                         });
+                });
+
+            modelBuilder.Entity("BaseProject.Data.Entities.CategoriesDetail", b =>
+                {
+                    b.Property<int>("CategoriesID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PostID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoriesDetailID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("CategoriesID", "PostID");
+
+                    b.HasIndex("PostID");
+
+                    b.ToTable("CategoriesDetails", (string)null);
                 });
 
             modelBuilder.Entity("BaseProject.Data.Entities.Comment", b =>
@@ -574,7 +588,7 @@ namespace BaseProject.Data.Migrations
                             Id = new Guid("062d4aa7-32c4-4e97-8ca7-ca3b4d97280c"),
                             AccessFailedCount = 0,
                             Address = "Biên Hòa Đồng Nai",
-                            ConcurrencyStamp = "f846d515-effe-4914-961a-0c65f2661424",
+                            ConcurrencyStamp = "ec913895-c975-46e1-8fe2-9600de21334c",
                             DateOfBir = new DateTime(2002, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "abcd@gmail.com",
                             EmailConfirmed = true,
@@ -583,7 +597,7 @@ namespace BaseProject.Data.Migrations
                             Name = "Phạm Thanh Hải",
                             NormalizedEmail = "abcd@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAIAAYagAAAAEA3x2Iby0t8w5v8xhGo7Dfu8OebT7HnDagYr1bFgS6f6puGJpEOn4yReKw001ja1jQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGlZPf/AJX2ni2tztCScDD9pwTwdagBaecxX+5C5avfTn/36AIerX783V4FpEc0Hvw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -744,7 +758,7 @@ namespace BaseProject.Data.Migrations
 
             modelBuilder.Entity("BaseProject.Data.Entities.CategoriesDetail", b =>
                 {
-                    b.HasOne("BaseProject.Data.Entities.Category", "Category")
+                    b.HasOne("BaseProject.Data.Entities.Categories", "Category")
                         .WithMany("CategoriesDetail")
                         .HasForeignKey("CategoriesID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -972,7 +986,7 @@ namespace BaseProject.Data.Migrations
                     b.Navigation("Posts");
                 });
 
-            modelBuilder.Entity("BaseProject.Data.Entities.Category", b =>
+            modelBuilder.Entity("BaseProject.Data.Entities.Categories", b =>
                 {
                     b.Navigation("CategoriesDetail");
                 });
